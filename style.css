@@ -7,3 +7,7 @@ body {
 a, a:visited, a:hover, a:active {
     color: inherit;
 }
+
+.footer {
+    text-align:right;
+}
