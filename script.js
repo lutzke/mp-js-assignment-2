@@ -4,11 +4,14 @@
 
 function writeHTML(bookList) {
   booksDiv = document.querySelector('#books');
-  bookList = bookList.join('<br>');
-  booksDiv.innerHTML = bookList;
+  booksDiv.innerHTML = bookList.join('<br>');
 };
 
 fetch('https://morningpants.github.io/100-best-books/books.json')
-  .then(response => response.json())
-  .then(books => books.map(book => `${book.title} by ${book.author}`))
+  .then(response => {
+    console.log(`Response: HTTP ${response.status}`);
+    return response.json();})
+  .then(books => {
+    console.log(books);
+    return books.map(book => `<div class="book"> <div class="cover"> <img src="https://morningpants.github.io/100-best-books/static/${book.imageLink}" alt=""> </div> <br><b>${book.title}</b> <br> by ${book.author} </div>`);})
   .then(books => writeHTML(books));

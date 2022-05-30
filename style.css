@@ -1,11 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family:'Roboto', sans-serif;
 }
 
 a, a:visited, a:hover, a:active {
-    color: inherit;
+    color:inherit;
+}
+
+#books {
+    display:flex;
+    flex-wrap:wrap;
+}
+
+.book {
+    /* border:1px solid greenyellow; */
+    padding:20px;
+    text-align:center;
+}
+
+img {
+    height:300px;
+    /* border:1px solid red; */
 }
 
 .footer {
