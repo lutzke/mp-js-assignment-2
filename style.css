@@ -9,7 +9,7 @@ a, a:visited, a:hover, a:active {
 }
 
 #books {
-    display:flex;
+    display:inline-flex;
     flex-wrap:wrap;
 }
 
@@ -19,8 +19,13 @@ a, a:visited, a:hover, a:active {
     text-align:center;
 }
 
+.book-text {
+    width:0;
+    min-width:100%;
+}
+
 img {
-    height:300px;
+    height:340px;
     /* border:1px solid red; */
 }
 
