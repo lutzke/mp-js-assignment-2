@@ -13,5 +13,14 @@ fetch('https://morningpants.github.io/100-best-books/books.json')
     return response.json();})
   .then(books => {
     console.log(books);
-    return books.map(book => `<div class="book"> <img src="https://morningpants.github.io/100-best-books/static/${book.imageLink}" alt=""> <div class="book-text"> <br><b>${book.title}</b> <br> by ${book.author} </div> </div>`);})
+    return books.map(book => 
+      `<div class="book"> 
+        <img src="https://morningpants.github.io/100-best-books/static/${book.imageLink}" alt="Cover of ${book.title}">
+        <br>
+        <div class="book-text">
+          <b>${book.title}</b>
+          <br>
+          by ${book.author}
+        </div>
+      </div>`);})
   .then(books => writeHTML(books));
