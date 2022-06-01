@@ -8,6 +8,10 @@ a, a:visited, a:hover, a:active {
     color:inherit;
 }
 
+#title {
+    padding-left:20px;
+}
+
 #books {
     display:inline-flex;
     flex-wrap:wrap;
