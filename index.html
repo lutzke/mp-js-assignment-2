@@ -14,7 +14,7 @@
 
     <body>
 
-        <div id="title">
+        <div id="page-title">
             <h1>100<b><i>BestBooks</i></b></h1>
         </div>
 
@@ -23,20 +23,20 @@
                 <strong><i>Sort by</i></strong>
             </div>
             <div class="button">
-                <select name="title" onchange="sortBooks('title')" id="sortbyTitle">
+                <select name="title" onchange="sortBooks('title')" id="title">
                     <option value="title" selected disabled>title</option>
-                    <option value="asc">A-Z</option>
-                    <option value="desc">Z-A</option>
+                    <option value="asc">A → Z</option>
+                    <option value="desc">Z → A</option>
                 </select>
-                <select name="author" onchange="sortBooks('author')" id="sortbyAuthor">
+                <select name="author" onchange="sortBooks('author')" id="author">
                     <option value="author" selected disabled>author</option>
-                    <option value="asc">A-Z</option>
-                    <option value="desc">Z-A</option>
+                    <option value="asc">A → Z</option>
+                    <option value="desc">Z → A</option>
                 </select>
-                <select name="year" onchange="sortBooks('year')" id="sortbyYear">
+                <select name="year" onchange="sortBooks('year')" id="year">
                     <option value="year" selected disabled>year</option>
-                    <option value="asc">ascending</option>
-                    <option value="desc">descending</option>
+                    <option value="asc" disabled>ascending</option>
+                    <option value="desc" disabled>descending</option>
                 </select>
             </div>
 
@@ -46,20 +46,20 @@
                 <strong><i>Filter by</i></strong>
             </div>
             <div class="button">
-                <select name="language" onchange="sortBooks('language')" id="filterbyLanguage">
+                <select name="language" onchange="filterBooks('language')" id="language">
                     <option value="language" selected disabled>language</option>
-                    <option value="english">English</option>
-                    <option value="french">French</option>
+                    <option value="english" disabled>English</option>
+                    <option value="french" disabled>French</option>
                 </select>
-                <select name="length" onchange="sortBooks('length')" id="filterbyLength">
+                <select name="length" onchange="filterBooks('length')" id="length">
                     <option value="length" selected disabled>length</option>
-                    <option value="200">200-299</option>
-                    <option value="300">300-399</option>
+                    <option value="200" disabled>200-299</option>
+                    <option value="300" disabled>300-399</option>
                 </select>
-                <select name="century" onchange="sortBooks('century')" id="filterbyCentury">
+                <select name="century" onchange="filterBooks('century')" id="century">
                     <option value="century" selected disabled>century</option>
-                    <option value="1700">1700</option>
-                    <option value="1800">1800</option>
+                    <option value="1700" disabled>1700</option>
+                    <option value="1800" disabled>1800</option>
                 </select>
             </div>
 

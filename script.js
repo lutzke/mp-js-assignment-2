@@ -30,37 +30,87 @@ function writeHTML(bookObjects) {
 
 // Orders the books on the page in the order specified by the user
 function sortBooks(sortBy) {
-  // old params: type, ascending
 
-  /*
-  if (!globalBookObjects) {
-    console.log('sortBooks: globalBookObjects appears to be empty!')
-    return 1;
-  };
-  */
+  // Find out which order the user wants to sort in (e.g. ascending)
+  const selectedSort = document.getElementById(sortBy);
+  const type = selectedSort.options[selectedSort.selectedIndex].value;
 
-  // let mySelect = document.getElementById('MySelect');
-  // let selected = mySelect.options[mySelect.selectedIndex].text;
+  // We don't want to overwrite the original array of book objects
+  let tempGlobalBookObjects = globalBookObjects;
 
-  if (sortBy === 'title') {
-    var selectedSort = document.getElementById('sortbyTitle');
-    let type = selectedSort.options[selectedSort.selectedIndex].value;
-  
-    tempGlobalBookObjects = globalBookObjects; // sort() sorts in place
-  
-    // Perform the kind of sorting the user requested
-    switch (type) {
-      case 'asc':
+  switch (sortBy) {
+
+    case 'title':
+
+      switch (type) {
+        case 'asc':
+          // If a.title comes later in the alphabet, sort it after b.title
           tempGlobalBookObjects.sort((a, b) => (a.title > b.title) ? 1 : -1);
-        break;
-      case 'desc':
-        tempGlobalBookObjects.sort((a, b) => (a.title > b.title) ? -1 : 1);
-        break;
+          break;
+        case 'desc':
+          tempGlobalBookObjects.sort((a, b) => (a.title > b.title) ? -1 : 1);
+          break;
       };
+      break;
+
+    case 'author':
+      // Note: There are no authors in the list with same surname and different
+      // given name, so we don't need to check for that.
+
+      // Return 1 if a comes after b. Otherwise, return -1
+      tempGlobalBookObjects.sort((a, b) => {
+
+        // Get the authors' surnames
+        aSurname = a.author.split(' ').pop();
+        bSurname = b.author.split(' ').pop();
+
+        switch (type) {
+          case 'asc':
+            // Unknown authors are sorted last
+            if (aSurname === 'Unknown') {
+              return 1;
+            }
+            if (bSurname === 'Unknown') {
+              return -1;
+            }
+
+            if (aSurname > bSurname) {
+              return 1;
+            } else {
+              return -1;
+            }
+            // break;
+
+          case 'desc':
+            if (aSurname === 'Unknown') {
+              return -1;
+            }
+            if (bSurname === 'Unknown') {
+              return 1;
+            }
+
+            if (aSurname > bSurname) {
+              return -1;
+            } else {
+              return 1;
+            }
+            // break;
+        };
+
+      });
+      break;
   }
+
+  // Display sorted books on the page
   writeHTML(tempGlobalBookObjects);
-  // Revert selected item to default, for stylistic reasons
-  selectedSort.selectedIndex = 0; 
+  
+  // Once we are no longer sorting by some criterion, revert its dropdown
+  const sortByOptions = ['title', 'author', 'year'];
+  for (let i = 0; i < sortByOptions.length; i++) {
+    if (!(sortByOptions[i] === sortBy)) {
+      document.getElementById(sortByOptions[i]).selectedIndex = 0; 
+    }
+  }
   
 }
 
