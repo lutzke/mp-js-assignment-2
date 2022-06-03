@@ -39,12 +39,15 @@ function sortBooks(sortBy) {
   let tempGlobalBookObjects = globalBookObjects;
 
   switch (sortBy) {
+    // Notes on greater/less than and sort():
+    // Z has a larger numeric value than A, so (Z > A) is true
+    // someArray.sort((A, B) => someFunction); sorts A after B if
+    // someFunction returns 1, and A before B if it returns -1.
 
     case 'title':
 
       switch (type) {
         case 'asc':
-          // If a.title comes later in the alphabet, sort it after b.title
           tempGlobalBookObjects.sort((a, b) => (a.title > b.title) ? 1 : -1);
           break;
         case 'desc':
@@ -57,7 +60,6 @@ function sortBooks(sortBy) {
       // Note: There are no authors in the list with same surname and different
       // given name, so we don't need to check for that.
 
-      // Return 1 if a comes after b. Otherwise, return -1
       tempGlobalBookObjects.sort((a, b) => {
 
         // Get the authors' surnames
@@ -66,35 +68,28 @@ function sortBooks(sortBy) {
 
         switch (type) {
           case 'asc':
-            // Unknown authors are sorted last
+            // Ascending order: unknown authors are sorted last
             if (aSurname === 'Unknown') {
               return 1;
             }
             if (bSurname === 'Unknown') {
               return -1;
             }
-
-            if (aSurname > bSurname) {
-              return 1;
-            } else {
-              return -1;
-            }
-            // break;
+            // Ascending (A-Z) order: if aSurname comes after bSurname in the
+            // alphabet, then put aSurname after bSurname
+            return (aSurname > bSurname) ? 1 : -1;
 
           case 'desc':
+            // Descending order: unknown authors are sorted first
             if (aSurname === 'Unknown') {
               return -1;
             }
             if (bSurname === 'Unknown') {
               return 1;
             }
-
-            if (aSurname > bSurname) {
-              return -1;
-            } else {
-              return 1;
-            }
-            // break;
+            // Descending (Z-A) order: if aSurname comes after bSurname in the
+            // alphabet, then put aSurname before bSurname
+            return (aSurname > bSurname) ? -1 : 1;
         };
 
       });
