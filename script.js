@@ -38,6 +38,7 @@ function sortBooks(sortBy) {
   // We don't want to overwrite the original array of book objects
   let tempGlobalBookObjects = globalBookObjects;
 
+  // This does the actual sorting
   switch (sortBy) {
     // Notes on greater/less than and sort():
     // Z has a larger numeric value than A, so (Z > A) is true
@@ -94,6 +95,19 @@ function sortBooks(sortBy) {
 
       });
       break;
+    
+    case 'year':  
+      tempGlobalBookObjects.sort((a, b) => {
+        switch (type) {
+            case 'asc':
+              return (a.year < b.year) ? -1 : 1;
+            
+            case 'desc':
+              return (a.year < b.year) ? 1 : -1;
+        };
+      });
+      break;
+
   }
 
   // Display sorted books on the page
@@ -122,7 +136,7 @@ fetch('https://morningpants.github.io/100-best-books/books.json')
   // Assign each book object in the books array a new property, html,
   // which contains the HTML to render for each book.
   .then(books => { 
-    console.log(books); // See the object in the console, for debugging
+    // console.log(books); // See the object in the console, for debugging
     for (let i = 0; i < books.length; i++) {
       books[i].html = `
         <div class="book"> 
@@ -132,6 +146,8 @@ fetch('https://morningpants.github.io/100-best-books/books.json')
             <strong>${books[i].title}</strong>
             <br>
             by ${books[i].author}
+            <br>
+            <i>${(books[i].year < 0) ? String(books[i].year * -1) + ' BCE' : books[i].year}</i>
           </div>
         </div>`
     };
