@@ -7,24 +7,50 @@
 // https://morningpants.github.io/100-best-books/static/images/things-fall-apart.jpg
 
 
-// This function used to just take an array of strings of HTML and join them;
-// now it gets the HTML strings from an array of objects.
-//
-// Eventually, all this will be re-worked so that books can be sorted, 
-// filtered, searched through, etc. with only the relevant ones displayed in 
-// the correct order.
-function writeHTML(booksObjects) {
+// Once the book information is fetched and parsed into objects, it will
+// eventually be stored in here for ease of access by functions.
+let globalBookObjects = [];
 
-  // Takes HTML from array of objects, booksObjects, and puts it into an array
+
+// Takes HTML from 'html' properties from an array of objects, and inserts
+// all that HTML into the page.
+function writeHTML(bookObjects) {
+
+  // Takes HTML from array of objects, bookObjects, and places it into an array
   // of strings.
   bookList = [];
-  for (let i = 0; i < booksObjects.length; i++) {
-    bookList[i] = booksObjects[i].html;
+  for (let i = 0; i < bookObjects.length; i++) {
+    bookList[i] = bookObjects[i].html;
   };
 
   booksDiv = document.querySelector('#books');
   booksDiv.innerHTML = bookList.join('<br>');
 };
+
+
+// Orders the books on the page in the order specified by the user
+function sortBooks(type, ascending) {
+  /*
+  if (!globalBookObjects) {
+    console.log('sortBooks: globalBookObjects appears to be empty!')
+    return 1;
+  };
+  */
+  tempGlobalBookObjects = globalBookObjects; // sort() sorts in place
+
+  // Perform the kind of sorting the user requested
+  switch (type) {
+    case 'title':
+      if (ascending) {
+        tempGlobalBookObjects.sort((a, b) => (a.title > b.title) ? 1 : -1);
+      } else {
+        tempGlobalBookObjects.sort((a, b) => (a.title > b.title) ? -1 : 1);
+      }
+      break;
+    };
+
+  writeHTML(tempGlobalBookObjects);
+}
 
 
 // Here is all the async code which fetches the JSON, parses it, and generates
@@ -57,4 +83,7 @@ fetch('https://morningpants.github.io/100-best-books/books.json')
 
   // Send the array of book objects, with their new html properties, on to the 
   // next step.
-  .then(books => writeHTML(books));
+  .then(books => {
+    globalBookObjects = books; // Store book objects globally
+    return writeHTML(books);
+  });
