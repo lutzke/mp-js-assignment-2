@@ -29,27 +29,39 @@ function writeHTML(bookObjects) {
 
 
 // Orders the books on the page in the order specified by the user
-function sortBooks(type, ascending) {
+function sortBooks(sortBy) {
+  // old params: type, ascending
+
   /*
   if (!globalBookObjects) {
     console.log('sortBooks: globalBookObjects appears to be empty!')
     return 1;
   };
   */
-  tempGlobalBookObjects = globalBookObjects; // sort() sorts in place
 
-  // Perform the kind of sorting the user requested
-  switch (type) {
-    case 'title':
-      if (ascending) {
-        tempGlobalBookObjects.sort((a, b) => (a.title > b.title) ? 1 : -1);
-      } else {
+  // let mySelect = document.getElementById('MySelect');
+  // let selected = mySelect.options[mySelect.selectedIndex].text;
+
+  if (sortBy === 'title') {
+    var selectedSort = document.getElementById('sortbyTitle');
+    let type = selectedSort.options[selectedSort.selectedIndex].value;
+  
+    tempGlobalBookObjects = globalBookObjects; // sort() sorts in place
+  
+    // Perform the kind of sorting the user requested
+    switch (type) {
+      case 'asc':
+          tempGlobalBookObjects.sort((a, b) => (a.title > b.title) ? 1 : -1);
+        break;
+      case 'desc':
         tempGlobalBookObjects.sort((a, b) => (a.title > b.title) ? -1 : 1);
-      }
-      break;
-    };
-
+        break;
+      };
+  }
   writeHTML(tempGlobalBookObjects);
+  // Revert selected item to default, for stylistic reasons
+  selectedSort.selectedIndex = 0; 
+  
 }
 
 
@@ -72,7 +84,7 @@ fetch('https://morningpants.github.io/100-best-books/books.json')
           <img src="https://morningpants.github.io/100-best-books/static/${books[i].imageLink}" alt="Cover of ${books[i].title}">
           <br>
           <div class="book-text">
-            <b>${books[i].title}</b>
+            <strong>${books[i].title}</strong>
             <br>
             by ${books[i].author}
           </div>
