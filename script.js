@@ -29,11 +29,13 @@ function writeHTML(bookObjects) {
 
 
 // Orders the books on the page in the order specified by the user
-function sortBooks(sortBy) {
+function sortBooks(sortBy, type) {
 
   // Find out which order the user wants to sort in (e.g. ascending)
-  const selectedSort = document.getElementById(sortBy);
-  const type = selectedSort.options[selectedSort.selectedIndex].value;
+  if (!type) {
+    const selectedSort = document.getElementById(sortBy);
+    type = selectedSort.options[selectedSort.selectedIndex].value;
+  }
 
   // We don't want to overwrite the original array of book objects
   let tempGlobalBookObjects = globalBookObjects;
@@ -158,5 +160,5 @@ fetch('https://morningpants.github.io/100-best-books/books.json')
   // next step.
   .then(books => {
     globalBookObjects = books; // Store book objects globally
-    return writeHTML(books);
+    return sortBooks('author', 'asc'); // Default sort: by author, A-Z
   });
